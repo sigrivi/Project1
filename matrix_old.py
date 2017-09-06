@@ -2,7 +2,7 @@ import numpy
 import matplotlib.pyplot as plt
 from scipy import linalg
 import sys
-#makes the vectors of the tridiagonal matrix. You choose the size of the vectors.
+#makes the vektors of the tridiagonal matrix. You choose the size of the vectors.
 def selectsize(size):
 	a=numpy.ones(size-1)
 	b=numpy.ones(size)
@@ -44,7 +44,6 @@ f = numpy.zeros(N)
 
 print (a)
 print (a[1:N])
-
 print (len(a))
 print (len(a[1:N]))
 
@@ -62,8 +61,8 @@ for jjj in range(E.shape[0]-1):
 
 	ff=E[jjj+1,jjj]/E[jjj,jjj]
 	E[jjj+1,:]=E[jjj+1,:]-E[jjj,:]*ff
-print("tridiagonal matrix after first step of reduction:")
-print(E)
+#print("tridiagonal matrix after first step of reduction:")
+#print(E)
 
 for jjj in reversed(range(1,E.shape[0])):
 	ff=E[jjj-1,jjj]/E[jjj,jjj]
@@ -104,14 +103,14 @@ def solveequationAlternative(E,q):
 		v[jjj+1]=v[jjj+1]-v[jjj]*ff
 		#print(v)
 	
-	
+	print (E)
 	solution = numpy.zeros(N)
 	solution[N-1] = v[N-1]/E[N-1,N-1]
-
-	#for j in reversed(range(2,N+1)):	
-	for k in range(2,N+1):
+	
+	#for k in range(2,N+1):
 		#print (j)
-		j = N-k	
+		#j = N-k	
+	for j in reversed(range(2,N+1)):	
 		solution[j] = (v[j]-E[j,j+1]*solution[j+1])/-1
 	return solution
 
@@ -125,34 +124,25 @@ g = numpy.linspace(0,1,N+2)
 u = numpy.zeros(N)
 u[:] = func(g[1:N+1])
 
-#plt.plot(g[1:N+1], u, 'r',g[1:N+1], v, 'b')
-#plt.legend(["Exact","Numerical"])
-#plt.show()
+plt.plot(g[1:N+1], u, 'r',g[1:N+1], v, 'b')
+plt.legend(["Exact","Numerical"])
+plt.show()
 
-def uppertriangular(v):
-	q=v.copy() 
+def uppertriangular(q): #n is the dimension
 	N=len(q)
-	h=1/N
-	
 	A=numpy.zeros((N,N))
 	A[0,0]=2
 	for i in range(N-1):
 		A[i+1,i+1]=2-1/A[i,i]
-		q[i+1]=v[i+1]+v[i]/A[i,i]
+		q[i+1]=q[i+1]-q[i]/A[i,i]
 		A[i,i+1]=-1
-	q=q*h**2	
 	solution=numpy.zeros(N)
-	solution[N-1]=q[N-1]/A[N-1,N-1]
-	
-	#print("reduced matrix:")	
-	#print (A)
-	for i in range(2,N+1):
+	solution[N]=q[N]
+	for i in range(1,N):
 		k=N-i
-		#k=i
-		print(k)
-		solution[k]=(q[k]+solution[k+1])/A[k,k]
-		
-	return(solution)
+		solution[k-1]=A[k-1]*q[k-1]-q[k]
+	print(q)	
+	return(A)
 
 #def uppertriangular(N): #N is the dimension
 #	A=numpy.zeros((N,N))
@@ -163,13 +153,6 @@ def uppertriangular(v):
 #	for i in range(N-1):
 ##		A[i,i+1]=-1
 #	return(A)
-solution = solveequation(E,f)
-#solution=uppertriangular(f)
-#sol2=solveequationAlternative(E,f)
-plt.figure()
-plt.plot(g[1:N+1], solution, 'r',g[1:N+1], v, 'b')
-#plt.figure()
-#plt.plot(g[1:N+1], sol2, 'r',g[1:N+1], v, 'b')
-plt.show()
 
-
+Q=uppertriangular(f)
+print(Q)
