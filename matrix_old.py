@@ -20,7 +20,7 @@ def buildmatrix(vectora, vectorb, vectorc):
 		A[i,i+1]=vectorc[i]
 	return(A)
 
-N = 100
+N = 6
 a,b,c=selectsize(N)
 D=buildmatrix(a,b,c)
 
@@ -88,7 +88,9 @@ def solveequation(E,q):
 	
 	for jjj in range(E.shape[0]):
 		v[jjj]=v[jjj]/E[jjj,jjj]
-
+	print("solution[n-1]:")
+	print(v[N-1])
+	print(v)
 	return v
 
 def solveequationAlternative(E,q):
