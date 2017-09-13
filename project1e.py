@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import linalg
 import sys
+import time
 
+from project1b import buildmatrix
+from project1c import solveequation
 
 N = 10 #here you can choose the number of grid points
 h = 1/N
@@ -18,33 +21,26 @@ func = lambda x: 1-(1-np.exp(-10))*x-np.exp(-10*x)
 u = np.zeros(N)
 u[:] = func(g[1:N+1])
 
-print(u)
 
-#Uses the vectors a,b,c to build the tridiagonal matrix.
-def buildmatrix(N):
-
-	a=np.ones(N-1)*(-1)
-	b=np.ones(N)*2
-	c=np.ones(N-1)*(-1)
-	A=np.zeros((N,N))
-
-	for i in range(N-1):
-		A[i+1,i]=a[i]
-	for i in range(N):
-		A[i,i]=b[i]
-	for i in range(N-1):
-		A[i,i+1]=c[i]
-	return(A)
-
-D = buildmatrix(N)
+D = buildmatrix(N) #builds tridiagonal matrix
 E = D.copy()
 
-v = linalg.solve(E,f*h**2)
+time1=time.time()
+v1 = linalg.solve(E,f*h**2)
+time2=time.time()
+print("time:",(time2-time1)*1000)
 
-plt.plot(g[1:N+1], u, 'r',g[1:N+1], v, 'b')
-plt.legend(["Exact","Numerical"])
+print(v1)
+
+v2 = solveequation(f)
+diff = v1-v2
+
+plt.plot(g[1:N+1], diff)
+#plt.plot(g[1:N+1], v1, 'r',g[1:N+1], v2, 'b')
+#plt.legend(["Solution from LU decomposition","My numerical solution"])
 plt.xlabel('x')
-plt.ylabel('u(x)')
-plt.title('the exact and numerical solution of u²(x)/dx²=100*exp(-10)')
+plt.ylabel('v1-v2')
+plt.title('LU solution (v1) - row reduction solution(v2)')
+#plt.savefig('difference.png',dpi=225)
 plt.show()
 

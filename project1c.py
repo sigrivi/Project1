@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import linalg
 import sys
+import time
 
 N = 10 #here you can choose the number of grid points
 g = np.linspace(0,1,N+2) #values on the 1. axis
@@ -27,23 +28,25 @@ def solveequation(function):
 	for i in range(N):
 		coeff[i] = (i+2)/(i+1)
 
-
-	#print(coeff) #coeffisients are ok
 	for i in range(N-1):
-		#f[i+1] = function[i+1]+i*f[i]/(i+1) this does not work because when i=0, it adds nothin to function
 		f[i+1] = function[i+1]+f[i]/coeff[i]
 	f=f*(h**2)
 
 	solution[N-1] = f[N-1]/coeff[N-1]
-	#print("solution[N-1]:")	
-	#print(solution[N-1]) #i am sure that last element is correct
+
 	for i in range(2,N+1):#originally, i used range(2,N-1), this caused the two first elements of solution to be zero.
 		k = N-i
 		solution[k] = (f[k]+solution[k+1])/coeff[k]
 		
 	return(solution)
 
-v = solveequation(f)
+time1=time.time()
+v = solveequation(f) #numerical solution
+time2=time.time()
+print("time:",(time2-time1)*1000)
+
+print(v)
+
 
 plt.plot(g[1:N+1], u, 'r',g[1:N+1], v, 'b')
 plt.legend(["Exact","Numerical"])

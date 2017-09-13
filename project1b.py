@@ -2,6 +2,7 @@ import numpy
 import matplotlib.pyplot as plt
 from scipy import linalg
 import sys
+import time
 
 #Uses the vectors a,b,c to build the tridiagonal matrix.
 def buildmatrix(N):
@@ -19,10 +20,10 @@ def buildmatrix(N):
 		A[i,i+1]=c[i]
 	return(A)
 
-N = 100  #here you can choose the number of grid points
+N = 10  #here you can choose the number of grid points
 D=buildmatrix(N)
 E=D.copy()
-
+print(D)
 
 g = numpy.linspace(0,1,N+2) #values on the 1. axis
 
@@ -44,31 +45,38 @@ def solveequation(E,q):
 	v=v*h**2
 	
 	#reduses E to an upper triangular matrix:
-	for jjj in range(E.shape[0]-1): 
-		ff=E[jjj+1,jjj]/E[jjj,jjj]
-		E[jjj+1,:]=E[jjj+1,:]-E[jjj,:]*ff
-		v[jjj+1]=v[jjj+1]-v[jjj]*ff
+	for i in range(E.shape[0]-1): 
+		ff=E[i+1,i]/E[i,i]
+		E[i+1,:]=E[i+1,:]-E[i,:]*ff
+		v[i+1]=v[i+1]-v[i]*ff
 	
 	#reduces E to a diagonal matrix:
-	for jjj in reversed(range(1,E.shape[0])):
-		ff=E[jjj-1,jjj]/E[jjj,jjj]
-		E[jjj-1,:]=E[jjj-1,:]-E[jjj,:]*ff
-		v[jjj-1]=v[jjj-1]-v[jjj]*ff
+	for i in reversed(range(1,E.shape[0])):
+		ff=E[i-1,i]/E[i,i]
+		E[i-1,:]=E[i-1,:]-E[i,:]*ff
+		v[i-1]=v[i-1]-v[i]*ff
 	
 	#the solution vector v:
-	for jjj in range(E.shape[0]):
-		v[jjj]=v[jjj]/E[jjj,jjj]
+	for i in range(E.shape[0]):
+		v[i]=v[i]/E[i,i]
 	
 	return v
 
-#to test the equation solver:
-v=solveequation(E,f)
+
+time1=time.time()
+v=solveequation(E,f) #numerical solution
+print(v)
+time2=time.time()
+print("time:",(time2-time1)*1000)
+
 
 plt.plot(g[1:N+1], u, 'r',g[1:N+1], v, 'b')
 plt.legend(["Exact","Numerical"])
 plt.xlabel('x')
 plt.ylabel('u(x)')
-plt.title('the exact and numerical solution of u²(x)/dx²=100*exp(-10)')
+plt.title('solution of u²(x)/dx²=100*exp(-10), 1000 grid points')
+plt.savefig('1000gridpoints.png',dpi=225)
+
 plt.show()
 
 

@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Abstract}{1}
+\contentsline {section}{\numberline {2}Introduction}{2}
+\contentsline {section}{\numberline {3}Method}{2}
+\contentsline {subsection}{\numberline {3.1}Discretizing the second order differentail equation}{2}
+\contentsline {subsection}{\numberline {3.2}Gaussian elimination on a tridiagonal matrix}{3}
+\contentsline {subsection}{\numberline {3.3}Specialized algorithm}{4}
+\contentsline {subsection}{\numberline {3.4}Relative error}{4}
+\contentsline {section}{\numberline {4}Results and Discussion}{5}
+\contentsline {subsection}{\numberline {4.1}The numerical solution}{5}
+\contentsline {subsection}{\numberline {4.2}Relative error and loss of numerical precision}{5}
+\contentsline {subsection}{\numberline {4.3}Efficiency}{8}
+\contentsline {section}{\numberline {5}Conclusion}{10}
+\contentsline {section}{\numberline {6}References}{10}

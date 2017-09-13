@@ -1,0 +1,50 @@
+Benchmark calculations. 
+
+project1b.py
+solveequation(E,q) was used to produse figure 1, 2 and 3 in the report. 
+
+Buildmatrix(10) produce this matrix: 
+[[ 2. -1.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [-1.  2. -1.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0. -1.  2. -1.  0.  0.  0.  0.  0.  0.]
+ [ 0.  0. -1.  2. -1.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0. -1.  2. -1.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0. -1.  2. -1.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0. -1.  2. -1.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0. -1.  2. -1.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0. -1.  2. -1.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0. -1.  2.]]
+
+v=solveequation(E,f) produces this vector when N=10: 
+
+[ 0.57201155  0.74113278  0.7479334   0.68933662  0.60439185 0.50883174  0.40899481  0.30743478  0.20518055  0.10264662]
+
+The CPU time mentioned in the report can be found by setting N=10000
+
+
+project1c.py
+v = solveequation(f) produces the exact same wector as the one above when N=10. 
+The CPU time mentioned in the report can be found by setting N=10000
+
+
+project1d.py
+The solveequation function is the same as in project 1c, but here I have included the option of setting the precision to single. 
+
+ploterror(7) produces the error plots in the report, you have to manually choose if you want to use double or single precision. 
+
+With single precision, ploterror(7) returns this vector:
+[-0.88605511 -1.71518123 -2.70061707 -3.70198536 -4.15959406 -2.46639729 -1.30719042]
+
+With double precision, ploterror(7) returns this vector:
+[-0.88605517 -1.71518421 -2.70056533 -3.69912927 -4.69898587 -5.69896629 -6.69834827]
+
+
+project1e.py
+N = 1000 produses the plot of difference between LU solution and row reduction solution. 
+
+N = 10 gives 
+v1 = [ 0.57201155  0.74113278  0.7479334   0.68933662  0.60439185  0.50883174 0.40899481  0.30743478  0.20518055  0.10264662] 
+
+The CPU time mentioned in the report can be found by setting N=10000
+
+
